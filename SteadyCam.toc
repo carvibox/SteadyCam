@@ -1,0 +1,53 @@
+## Interface: 120100, 120105
+## Title: |A:::|a|TInterface\AddOns\SteadyCam\Media\Wordmark:15:86:0:0:512:128:2:510:19:108|t
+## Notes: Frame your character once. Mount and dismount without the camera jumping, tuned by measuring how the game moves the camera for your race and mounts.
+## Notes-esES: Encuadra a tu personaje una vez. Monta y desmonta sin que la cámara salte.
+## Notes-esMX: Encuadra a tu personaje una vez. Monta y desmonta sin que la cámara salte.
+## Notes-deDE: Richte deinen Charakter einmal aus. Auf- und absitzen, ohne dass die Kamera springt.
+## Notes-frFR: Cadrez votre personnage une fois. Montez et descendez sans que la caméra saute.
+## Notes-itIT: Inquadra il personaggio una volta. Monta e smonta senza che la telecamera salti.
+## Notes-ptBR: Enquadre seu personagem uma vez. Monte e desmonte sem a câmera pular.
+## Notes-ruRU: Настройте положение персонажа один раз. Садитесь на транспорт и спешивайтесь без рывков камеры.
+## Notes-koKR: 캐릭터 위치를 한 번만 맞추세요. 탈것에 타고 내릴 때 카메라가 튀지 않습니다.
+## Notes-zhCN: 只需调整一次角色位置。上下坐骑时镜头不再跳动。
+## Notes-zhTW: 只需調整一次角色位置。上下坐騎時鏡頭不再跳動。
+## Version: 1.0.0
+## Author: carvibox
+## X-License: All Rights Reserved
+## SavedVariables: SteadyCamDB
+## Category: Camera
+## IconTexture: Interface\AddOns\SteadyCam\Media\Icon
+## AddonCompartmentFunc: SteadyCam_OnAddonCompartmentClick
+
+Core\Init.lua
+Core\Locale.lua
+Locales\esES.lua
+Locales\deDE.lua
+Locales\frFR.lua
+Locales\itIT.lua
+Locales\ptBR.lua
+Locales\ruRU.lua
+Locales\koKR.lua
+Locales\zhCN.lua
+Locales\zhTW.lua
+Core\Database.lua
+Core\ReferenceData.lua
+Core\MountFamilies.lua
+Core\MountSizes.lua
+Core\KnownCalibrations.lua
+Core\Analysis.lua
+Core\Mounts.lua
+Core\Profiles.lua
+Core\Camera.lua
+Core\Conflicts.lua
+Core\Probe.lua
+Core\Recorder.lua
+Core\Calibration.lua
+Core\Notify.lua
+Core\Research.lua
+Core\Runtime.lua
+UI\Theme.lua
+UI\Widgets.lua
+UI\Window.lua
+UI\Wizard.lua
+UI\Mounts.lua

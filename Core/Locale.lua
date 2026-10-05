@@ -1,0 +1,315 @@
+---------------------------------------------------------------------------------------
+--  Core/Locale.lua — UI strings: English base + the lookup (other languages: Locales/)
+---------------------------------------------------------------------------------------
+--  PC.L[key] returns the client-language string, falling back to English. The line
+--  said in /say during calibration (SAY_TEXT) exists in every client language.
+---------------------------------------------------------------------------------------
+local _, PC = ...
+
+local enUS = {
+  TAGLINE = "Frame your character once. Mount and dismount without the camera jumping.",
+  ENABLED = "SteadyCam enabled",
+  ENABLED_DESC = "Turn off to put your camera back exactly as it was before SteadyCam (do this before uninstalling).",
+  TURN_SPEED = "Camera turn speed",
+  TURN_SPEED_DESC = "How fast the camera turns when you move it with the mouse. 100% is the game's default.",
+  TURN_SPEED_GAME = "Changed outside SteadyCam (in the game's options or by another addon). Move the slider to let SteadyCam set it again.",
+  SLOWER = "Slower",
+  FASTER = "Faster",
+  NAME_TURN_SPEED = "the camera turn speed",
+  HOWTO_TITLE = "How to use it",
+  HOWTO_1 = "Set where your character sits on screen while walking (%s).",
+  HOWTO_2 = "Choose how it frames you on a mount: \"%s\" is recommended (%s).",
+  HOWTO_3 = "Done. Mount up and ride, everything else is automatic.",
+
+  STATUS_CHARACTER = "Character",
+  STATUS_MOUNT = "Mount",
+  STATUS_PROFILE = "Transition data",
+  STATUS_ON_FOOT = "on foot",
+  STATUS_TAXI = "flight path",
+  PROFILE_REFERENCE = "built-in reference",
+  PROFILE_MOUNT = "calibrated for this mount",
+  PROFILE_FAMILY = "same model as %s (calibrated)",
+  PROFILE_ESTIMATED = "estimated from the mount's size",
+  PROFILE_BUILTIN = "SteadyCam's measurements for your race",
+  PROFILE_AVERAGE = "average of your %d calibrated mounts",
+
+  STEP1_TITLE = "On foot",
+  STEP1_DESC = "Where should your character sit on screen while walking? Changes apply "
+    .. "instantly, so move the sliders and look at your character.",
+  FOOT_OFFSET = "Horizontal position",
+  FOOT_OFFSET_DESC = "0 centers the camera behind you. Positive moves the camera to the "
+    .. "right (your character shifts left); negative the opposite.",
+  FOOT_PITCH = "Vertical position",
+  FOOT_PITCH_DESC = "Higher values place your character higher on screen, leaving more "
+    .. "room to see the ground ahead.",
+  PITCH_OFF_DESC = "Vertical framing is off, as in the game. Move the slider to turn it on.",
+  LEFT = "Left",
+  RIGHT = "Right",
+  CENTER = "Center",
+  LOWER = "Lower",
+  HIGHER = "Higher",
+
+  STEP2_TITLE = "Mounted",
+  STEP2_DESC = "Mounts are bigger and the game moves the camera further away, so the same "
+    .. "offset looks much smaller. Choose how SteadyCam frames you while riding.",
+  MOUNTED_MODE = "Horizontal position",
+  MODE_MATCH = "Same as on foot",
+  MODE_CENTER = "Centered",
+  MODE_CUSTOM = "Custom",
+  RECOMMENDED = "Recommended",
+  MODE_MATCH_DESC = "Keeps your character in the same screen spot as on foot, scaled for "
+    .. "each mount's size.",
+  MODE_CENTER_DESC = "Camera straight behind you while riding.",
+  MODE_CUSTOM_DESC = "Pick the offset yourself.",
+  MOUNTED_OFFSET = "Mounted offset",
+  FLYING_PITCH = "Vertical position while flying",
+  FLYING_PITCH_DESC = "Same idea as on foot, used while flying. On a ground mount the game "
+    .. "ignores vertical framing, so SteadyCam keeps it steady to avoid bounces.",
+
+  STEP3_TITLE = "Calibration",
+  OPTIONAL = "Optional",
+  STEP3_DESC = "SteadyCam already ships measurements for every race and an estimate for every mount, so it works right away. If the camera still shifts when you mount or dismount a particular mount, calibrate that mount: about a minute, and the result also covers every mount with the same model.",
+  CALIBRATE_BUTTON = "Start calibration",
+
+  ADVANCED_SHOW = "Show advanced settings",
+  ADVANCED_HIDE = "Hide advanced settings",
+  SAVE_PREFS = "Save my preferences",
+  PREFS_SAVED = "Preferences saved!",
+  ADVANCED_CONFIRM = "The advanced settings change how SteadyCam works underneath. Most players never need them.\n\nI know what I'm doing:",
+  ADVANCED_TITLE = "Advanced",
+  DYNAMIC_PITCH = "Dynamic pitch",
+  DYNAMIC_PITCH_DESC = "Required for vertical framing.",
+  RESPECT_MS = "Motion Sickness Protection",
+  RESPECT_MS_DESC = "Never override Blizzard's motion sickness options. Horizontal and "
+    .. "vertical framing stop working while this is on.",
+  MOUNT_TIME = "Mount transition time",
+  MOUNT_TIME_DESC = "0 is best: the game already smooths the camera when you mount.",
+  RESTORE_BUTTON = "Restore Blizzard camera",
+  RESTORE_DONE = "Camera back to the game's own framing.",
+  RESTORE_CONFIRM = "Restore the Blizzard camera?\n\nThe camera goes back to the game's own: centered, no vertical framing, the game's turn speed. SteadyCam stays on, so you can start again from there.\n\nYour current values will be overwritten.",
+  RESTORE_TOOLTIP = "Puts the camera back the way the game has it without SteadyCam: centered, no vertical framing, the game's turn speed. SteadyCam stays on. To remove SteadyCam, turn it off with the switch at the top instead.",
+  RECOMMENDED_BUTTON = "Recommended values",
+  RECOMMENDED_TOOLTIP = "Turns SteadyCam on with its recommended values: on foot %.2f horizontal and %.2f vertical, mounted \"%s\", vertical while flying %.2f, turn speed %d%%.",
+  RECOMMENDED_DONE = "Recommended values applied.",
+  RECOMMENDED_CONFIRM = "Apply SteadyCam's recommended values?",
+  OVERWRITE_NOTE = "Your current values will be overwritten.",
+  LOAD_PREFS = "Load my preferences",
+  LOAD_TOOLTIP = "Brings back the framing you saved with \"Save my preferences\".",
+  LOAD_NONE = "Nothing saved yet: use \"Save my preferences\" at the bottom of the window first.",
+  LOAD_SAME = "Your saved preferences are already in use.",
+  LOAD_CONFIRM = "Load your saved preferences?",
+  LOAD_DONE = "Your preferences are loaded.",
+  DEBUG = "Debug messages",
+
+  DYNAMICCAM = "DynamicCam detected. It moves the same camera settings as SteadyCam, so the two will fight and the camera can jump. Disable DynamicCam to use SteadyCam.",
+  DISABLE_DYNAMICCAM = "Disable DynamicCam and reload",
+  DISABLE_SHORT = "Disable",
+  NOT_NOW = "Not now",
+  RELOAD_NOTE = "DynamicCam will be turned off on all your characters and the interface will reload.",
+  COMBATMODE = "Combat Mode detected: SteadyCam handles the camera (turn speed, shoulder offset and pitch).",
+  OPEN_BUTTON = "Open SteadyCam",
+  DISCORD_TEXT = "Questions, ideas or a bug? Come say hi on Discord.",
+  DISCORD_BUTTON = "Join the Discord",
+  COPY_LINK = "WoW can't open web pages. Press Ctrl+C to copy the invite, then paste it in your browser.",
+  -- Calibration wizard
+  WIZ_TITLE = "Calibration",
+  WIZ_INTRO = "SteadyCam mounts and dismounts a few times at two camera distances and "
+    .. "measures how the game moves your camera. You only press one button per step.",
+  WIZ_HOW_TITLE = "How it works",
+  WIZ_HOW = "1. Pick a mount below.\n"
+    .. "2. Each time the big button lights up, press it: it says a line in /say (your chat "
+    .. "bubble is what SteadyCam measures) and mounts or dismounts you.\n"
+    .. "3. Stand in an open spot (no wall or tree right behind you), stay still and don't "
+    .. "touch the mouse wheel: SteadyCam sets the camera distance.\n"
+    .. "4. The camera looks off-center during the test. That's expected; your camera is "
+    .. "restored at the end.",
+  WIZ_CHECKS = "Before you start",
+  CHECK_race = "Calibrating for: %s",
+  CHECK_combat = "Out of combat",
+  CHECK_instance = "In the open world (chat bubbles are hidden in instances)",
+  CHECK_resting = "Away from cities and inns (calibration speaks in /say)",
+  CHECK_outdoors = "Outdoors, where you can mount",
+  CHECK_active = "SteadyCam enabled, Motion Sickness Protection off",
+  CHECK_dynamiccam = "DynamicCam disabled (it moves the same camera settings)",
+  CHECK_mount = "A usable mount selected",
+  CHECK_fps = "Frame rate: %d fps (60+ recommended)",
+  CHECK_BUBBLES = "Chat bubbles are turned on during the test and restored afterwards.",
+  WIZ_PICK_MOUNT = "Mount to calibrate",
+  FILTER_favorites = "Favorites",
+  FILTER_usable = "Usable here",
+  FILTER_all = "All",
+  WIZ_NOT_USABLE = "not usable here",
+  WIZ_NO_MOUNTS_favorites = "No favorite mounts. Mark some in the Mount Journal, or use the "
+    .. "other tabs.",
+  WIZ_NO_MOUNTS_usable = "No mount can be used here. Go outdoors, to a place where you can ride.",
+  WIZ_NO_MOUNTS_all = "You have no mounts yet.",
+  WIZ_CALIBRATED = "calibrated",
+  WIZ_SAME_MODEL = "same model",
+  TAG_UNMEASURABLE = "can't measure",
+  SEX_M = "male",
+  SEX_F = "female",
+  FORM_ALT = "other form",
+  RESEARCH_TOGGLE = "Research mode",
+  RESEARCH_TOGGLE_DESC = "Helps fill SteadyCam's built-in data: on each character, the chat says whether its race still needs a quick calibration of the reference mount.",
+  RESEARCH_TODO = "Research: %s still needs measuring with %s. %s",
+  RESEARCH_LINK = "Measure now",
+  RESEARCH_DONE_HERE = "Research: %s is already measured.",
+  RESEARCH_OFFLIST = "Research: %s isn't on the list.",
+  RESEARCH_PROGRESS = "Research: %d/%d measured with %s. Still to do: %s.",
+  RESEARCH_ALL_DONE = "Research: every race on the list is measured. Thanks!",
+  RESEARCH_NOMOUNT = "Research: no mount usable by both factions found.",
+  RESEARCH_MOUNTS_NEXT = "Mount research: %d/%d of your mount models measured. Next: %s %s",
+  RESEARCH_MOUNTS_ELSEWHERE = "Mount research: %d/%d of your mount models measured; the rest can't be used here.",
+  RESEARCH_MOUNTS_DONE = "Mount research: all %d of your mount models are measured. Thanks!",
+  WIZ_BUILTIN = "built-in",
+  NOTIFY_UNCALIBRATED = "%s isn't calibrated yet. %s",
+  NOTIFY_LINK = "Calibrate it now",
+  NOTIFY_COMBAT = "Calibration has to wait until you leave combat.",
+  NOTIFY_TOGGLE = "Tell me when I ride a mount that isn't calibrated",
+  NOTIFY_TOGGLE_DESC = "A chat line with a link that starts its calibration (once per mount and session).",
+  CAL_DONE_CHAT = "%s calibrated.",
+  CAL_UNMEASURABLE = "%s can't be measured reliably (too big to frame from here). It uses estimated values.",
+  CAL_OBSTACLE = "%s: the measurements didn't match. Something behind you (a wall, a tree) is probably pulling the camera in. Move to an open spot and try again; nothing was changed.",
+  WIZ_DONE_OBSTACLE = "The measurements of %s didn't match between the two distances. That usually means something behind you (a wall, a tree, a roof) stops the camera from backing off.\n\nMove to an open spot, turn so nothing is behind you, and calibrate again. Your previous data was kept.",
+  WIZ_DONE_UNMEASURABLE = "%s can't be measured reliably: the camera can't frame it well enough. SteadyCam uses estimated values for it, and won't offer to calibrate it again.",
+  CAL_DONE_FAMILY = "Also covers %d mounts with the same model.",
+  WIZ_PLAN_FULL = "%d steps, about %d minutes. SteadyCam has no data for your race yet, so each distance is measured 3 times.",
+  WIZ_PLAN_QUICK = "%d steps, about %d minute. Each distance once; the data SteadyCam already has fills in the rest.",
+  WIZ_START = "Start",
+  WIZ_CANCEL = "Cancel",
+  WIZ_CLOSE = "Close",
+  WIZ_ANOTHER = "Calibrate another mount",
+  ZOOM_1 = "near",
+  ZOOM_2 = "far",
+  WIZ_STEP = "Step %d of %d",
+  WIZ_DISTANCE = "Camera distance: %s (%.1f)",
+  WIZ_ZOOMING = "Setting the camera distance... don't touch the mouse wheel.",
+  WIZ_PRESS_mount = "Press MOUNT and stand still.",
+  WIZ_PRESS_dismount = "Press DISMOUNT and stand still.",
+  WIZ_DISMOUNT_NOW = "Dismounting... if nothing happens, dismount your usual way.",
+  WIZ_PRESS_prep = "You're mounted: press to dismount first.",
+  WIZ_RECORDING = "Recording... stay still.",
+  WIZ_SETTLING = "Get ready...",
+  WIZ_PAUSED = "Paused: you're in combat. It continues when combat ends.",
+  WIZ_BUTTON_mount = "MOUNT",
+  WIZ_BUTTON_dismount = "DISMOUNT",
+  WIZ_BUTTON_prep = "DISMOUNT FIRST",
+  WIZ_BUTTON_WAIT = "...",
+  WIZ_OK = "Step recorded.",
+  WIZ_PAD_LOWERED = "This mount is big: for this calibration SteadyCam lowers your vertical position so your chat bubble stays in view. It goes back to your setting when the calibration ends. Press the button again.",
+  FAIL_noswap_mount = "The mount didn't happen. Stand still outdoors, on the ground, and try again.",
+  FAIL_noswap_dismount = "The dismount wasn't detected. Try again.",
+  FAIL_nobubble = "SteadyCam couldn't see your chat bubble. If an addon hides or restyles chat bubbles, turn that off during the calibration, then try again.",
+  CONFLICT_ADDONS = "%s also controls the camera. Turn off its camera offset / pitch options (or the addon) so the two don't fight and the camera doesn't jump.",
+  CONFLICT_CHANGED = "Something outside SteadyCam changed the %s. If the camera jumps, turn off the camera options of other addons or macros.",
+  NAME_SHOULDER = "horizontal camera offset",
+  NAME_PITCH = "dynamic pitch",
+  NAME_PAD = "vertical framing on foot",
+  NAME_PAD_FLYING = "vertical framing while flying",
+  FAIL_moved = "You moved during the step. Stand still and try again.",
+  FAIL_zoom = "The camera distance changed. Don't use the mouse wheel during the test.",
+  FAIL_mount = "That wasn't the selected mount. Try again.",
+  FAIL_data = "The measurement looked off (a hiccup). Try again.",
+  WIZ_DONE_TITLE = "Calibration complete",
+  WIZ_DONE = "%s is calibrated for %s.",
+  WIZ_DONE_RATIO = "Size factor: %.2f (how much smaller the same offset looks mounted).",
+  WIZ_DONE_APPLIED = "Your mount and dismount transitions now use these measurements.",
+  CALIBRATED_LIST = "Calibrated for this character: %s",
+  CALIBRATED_NONE = "No mounts calibrated for %s yet.",
+  CALIBRATED_COUNT = "Mounts calibrated for %s: %d",
+  VIEW_MOUNTS = "View my mounts",
+  CLOSE_MOUNTS = "Close my mounts",
+  RESTART_NEEDED = "This window came with an update: restart the game to load it (a /reload isn't enough for new files).",
+  MOUNTS_TITLE = "Mounts",
+  MOUNTS_HINT = "Click any mount to ride it or calibrate it.",
+  SEARCH = "Search",
+  TAB_CALIBRATED = "Calibrated",
+  TAB_UNCALIBRATED = "Not calibrated",
+  TAB_DESC_CALIBRATED = "Measured for %s, on any of your characters. Mounts with the same model use these measurements too.",
+  TAB_DESC_UNCALIBRATED = "These already work with SteadyCam's data for your race or an estimate from their size. Calibrate one only if the camera still shifts when you mount or dismount it.",
+  SRC_OWN = "Calibrated by you",
+  SRC_FACTORY = "Factory calibration",
+  SRC_FAMILY = "Same model as %s",
+  SRC_BUILTIN = "SteadyCam data for your race",
+  SRC_ESTIMATED = "Estimated from its size",
+  SRC_UNMEASURABLE = "Too big to measure, uses an estimate",
+  SRC_AVERAGE = "Average of your mounts",
+  RIDING = "Riding",
+  CLICK_OPTIONS = "Click for options",
+  CTRL_PREVIEW = "Ctrl-click: view it in the Dressing Room",
+  MENU_MOUNT = "Mount",
+  MENU_DISMOUNT = "Dismount",
+  MENU_PREVIEW = "View mount",
+  MENU_CALIBRATE = "Calibrate",
+  MENU_RECALIBRATE = "Calibrate again",
+  REASON_COMBAT = "in combat",
+  REASON_CALIBRATING = "calibrating",
+  REASON_FLYING = "flying",
+  REASON_MOVING = "moving",
+  ALL_CALIBRATED = "All your mounts are calibrated!",
+  NO_MATCH = "No mounts match \"%s\".",
+  MATCHES_IN_TAB = "%d match in \"%s\".",
+  FAIL_close = "This mount is too big to measure this close: SteadyCam moved the camera back a little. Press again.",
+  TEST_ARMED = "Test armed for your next mount and dismount (2 min): /say something right before each one.",
+  TEST_BUSY = "A calibration or test is already running.",
+  TEST_MOUNT = "Mount",
+  TEST_DISMOUNT = "Dismount",
+  TEST_RESULT = "%s test (%s, zoom %.1f, plan %s): back-and-forth %.0f px (character %.0f -> %.0f px).",
+  TEST_RAW = "Raw dismount (%s, zoom %.1f): the game switched the camera %.2f s after the dismount (lowest gain %.2f, size factor %.2f).",
+  TEST_RAW_METHOD = "  Dismount made by: %s. Server confirmation: %s (0 = like /dismount; ~0.1-0.2 s = like your usual dismount).",
+  TEST_RAW_SAME_FRAME = "same frame",
+  TEST_ARMED_LIMIT = "Offset limit test: zooming out, then stepping the offset 0 to 30 (about 7 s). Your chat bubble must stay up the whole time.",
+  TEST_BUSY_LIMIT = "Offset limit test: dismount first (and no other test or calibration running).",
+  TEST_LIMIT = "Offset limit (zoom %.1f), px per unit at each offset: %s. Where the number drops, the game stops following.",
+  TEST_ARMED_FORM = "Form test armed (5 min, up to 6 changes): /say something, then shapeshift, Soar, take a flight path... Each change is recorded for 2.5 s.",
+  TEST_FORM = "Form test (%s): %s -> %s px per unit (x%s), back-and-forth %.0f px (character %.0f -> %.0f px).",
+  TEST_NEEDS_DEBUG = "The test tools need \"Debug messages\" on (Advanced settings, at the bottom of this window).",
+  TEST_ARMED_RAW = "Raw test armed (5 min, up to 6 dismounts): after each dismount the mounted offset stays for a moment, so the game's own camera move gets measured. Mount up, /say something, then dismount.",
+  TEST_RAW_LEFT = "%d raw dismounts left: mount up, /say something, then dismount.",
+  TEST_DONE = "Test finished. /reload to save the results.",
+  TEST_NOBUBBLE = "Test: your chat bubble wasn't visible. /say something right before mounting or dismounting.",
+  TEST_TIMEOUT = "Test ended: no mount or dismount in time.",
+  TEST_NEXT_DISMOUNT = "Now dismount: /say something right before it.",
+  TEST_NEXT_MOUNT = "Now mount up: /say something right before it.",
+}
+
+-- The calibration line said in /say, in the client's language. It must keep the word
+-- "SteadyCam" (the probe recognizes your bubble by it) and fit in 255 bytes. It must stay
+-- LONG: the game keeps a bubble on screen longer for longer text, and the mount step
+-- needs it for the cast plus 1.6 s (a short line vanished mid-recording and failed the
+-- step). Plain wording, so it doesn't read as an ad.
+local SAY_TEXT = {
+  enUS = "SteadyCam calibration, step %d/%d: measuring how the game moves my camera when I mount and dismount. Only a few steps, sorry for the chat!",
+  esES = "Calibración de SteadyCam, paso %d/%d: midiendo cómo mueve el juego mi cámara al montar y desmontar. Son solo unos pasos, ¡perdón por el chat!",
+  deDE = "SteadyCam-Kalibrierung, Schritt %d/%d: Ich messe, wie das Spiel meine Kamera beim Auf- und Absitzen bewegt. Nur ein paar Schritte, sorry für den Chat!",
+  frFR = "Calibrage SteadyCam, étape %d/%d : je mesure comment le jeu déplace ma caméra quand je monte et descends. Quelques étapes seulement, désolé pour le chat !",
+  itIT = "Calibrazione SteadyCam, passo %d/%d: misuro come il gioco muove la mia telecamera quando salgo e scendo. Solo pochi passi, scusate per la chat!",
+  ptBR = "Calibração do SteadyCam, passo %d/%d: medindo como o jogo move minha câmera ao montar e desmontar. São só alguns passos, desculpem pelo chat!",
+  ruRU = "Калибровка SteadyCam, шаг %d/%d: измеряю, как игра двигает мою камеру, когда я сажусь и спешиваюсь. Пара шагов, простите за чат!",
+  koKR = "SteadyCam 보정 중, %d/%d 단계: 탈것에 타고 내릴 때 게임이 카메라를 어떻게 움직이는지 측정하고 있어요. 몇 단계면 끝나요, 채팅 죄송합니다!",
+  zhCN = "SteadyCam 校准中，第 %d/%d 步：正在测量上下坐骑时游戏如何移动我的镜头。只需几步，抱歉刷屏！",
+  zhTW = "SteadyCam 校正中，第 %d/%d 步：正在測量上下坐騎時遊戲如何移動我的鏡頭。只需幾步，抱歉洗頻！",
+}
+SAY_TEXT.esMX = SAY_TEXT.esES
+SAY_TEXT.enGB = SAY_TEXT.enUS
+
+-- Client-language tables registered by Locales/*.lua (loaded after this file); looked up
+-- when a string is used, so the order doesn't matter.
+local locales = {}
+
+--- Register a translation for one or more client locales.
+function PC.RegisterLocale(codes, strings)
+  for _, code in ipairs(codes) do
+    locales[code] = strings
+  end
+end
+
+local locale = GetLocale()
+local fallback = { SAY_TEXT = SAY_TEXT[locale] or SAY_TEXT.enUS }
+
+PC.L = setmetatable({}, {
+  __index = function(_, key)
+    local active = locales[locale]
+    return (active and active[key]) or fallback[key] or enUS[key] or key
+  end,
+})
