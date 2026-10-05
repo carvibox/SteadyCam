@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1 (2026-10-05)
+
+- New Discord invite in the window's Discord button.
+
 ## 1.0.0 (2026-10-05)
 
 First public release.

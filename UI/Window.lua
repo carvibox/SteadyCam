@@ -532,7 +532,7 @@ end
 -- Community: Discord invite. Addons can't open a browser, so the button shows the link
 -- in a game dialog, selected, ready for Ctrl+C.
 ---------------------------------------------------------------------------------------
-local DISCORD_URL = "https://discord.gg/qNbdkbjB9Z"
+local DISCORD_URL = "https://discord.gg/aa2aYfuJ9g"
 local DISCORD_COLOR = { 0.345, 0.396, 0.949, 1 } -- Discord blurple
 local LINK_POPUP = "STEADYCAM_DISCORD"
 

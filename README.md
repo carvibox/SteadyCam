@@ -1,14 +1,28 @@
 # SteadyCam
 
-**Frame your camera & character however you want, once. AND REMOVE the infamous stuttering when mounting and dismounting.**
+**Frame your camera and character however you want, once.**
+**NO MORE CAMERA JUMPS when mounting and dismounting!**
 
-World of Warcraft lets you push the camera off to the side (the "over the shoulder" view) so your
+World of Warcraft lets you push the camera off to the side (the "over the shoulder" view / Action Cam) so your
 character isn't stuck in the middle of the screen. The catch: the game scales that offset with the size
 of whatever you are standing on or riding. Mount up and your character slides toward the center; dismount
 and the camera snaps sideways. Every race and every mount does it by a different amount.
 
 SteadyCam fixes that. You choose where your character sits on screen once, and it stays there: on foot,
 on any mount, in the air, on a flight path, through every mount and dismount.
+
+## What it does
+
+**Without SteadyCam:** the game annoyingly slides and stutters your camera, both horizontally and
+vertically, every time you mount and dismount.
+
+**With SteadyCam:** your character stays exactly where you put it. Mount, dismount, repeat. Bye, random
+camera jumps!
+
+- **Choose where your character sits.** Slide it left or right, and the preview shows where it lands on
+  screen.
+- **Raise or lower your character.** See more of the world ahead, or more of the ground if you're into that.
+- **Separate height while flying.** See what's ahead of your flight.
 
 ## Features
 
@@ -30,8 +44,8 @@ on any mount, in the air, on a flight path, through every mount and dismount.
 - **Shapeshifts and special cases.** Worgen and Dracthyr form changes, Dracthyr Soar, flight paths and
   mounts that hide your character are all handled.
 - **No commands needed.** Everything lives in one small window.
-- **Built for Combat Mode.** Combat Mode hands its camera settings over to SteadyCam when both are
-  installed: Combat Mode does the combat and Mouse Look side, SteadyCam the framing.
+- **Built for Combat Mode.** If Combat Mode is installed, it hands its camera settings over to SteadyCam:
+  Combat Mode does the combat and Mouse Look side, SteadyCam the framing.
 - **Plays nice with others.** Warns you if another addon or macro fights over the same camera settings,
   and respects Blizzard's motion sickness options if you want it to.
 - **Easy to reset.** "Restore Blizzard camera" sets everything to the game's own camera, "Recommended
@@ -41,16 +55,12 @@ on any mount, in the air, on a flight path, through every mount and dismount.
 - **Localized** in English, Spanish, German, French, Italian, Brazilian Portuguese, Russian, Korean and
   Simplified / Traditional Chinese. The language follows your game client.
 
-## Getting started
+## Instructions
 
 1. Install and log in. The SteadyCam window opens by itself the first time.
-2. **On foot:** SteadyCam starts with its recommended framing (0.80 horizontal, 0.70 vertical). Drag the
-   sliders until your character sits where you like; changes apply instantly.
-3. **Mounted:** keep *Same as on foot* (recommended), or pick *Centered* or a custom offset.
-4. That's it. Mount up and ride.
-
-You can reopen the window any time from the **AddOns button on the minimap** or from
-**Esc → Options → AddOns → SteadyCam**.
+2. SteadyCam starts with its recommended framing (0.80 horizontal, 0.70 vertical and 0.60 vertical while
+   flying). Drag the sliders until your character sits where you like; changes apply instantly.
+3. That's it. Mount up and ride.
 
 ## Calibration (optional)
 
@@ -98,7 +108,7 @@ cities or inns.
 
 **Does it work in dungeons and raids?**
 The framing works everywhere. Calibration needs the open world, because chat bubbles are hidden inside
-instances.
+instances and you need to be able to use mounts.
 
 **The camera still shifts when I mount or dismount one particular mount.**
 Calibrate it once. Its measurements replace the estimate and also apply to every mount with the same model.
@@ -108,8 +118,8 @@ Calibrate it once. Its measurements replace the estimate and also apply to every
 Bug reports, suggestions and translation fixes are welcome. Please include your race, the mount, and
 what you saw.
 
-**Discord:** https://discord.gg/qNbdkbjB9Z (there's also a button for it at the bottom of the SteadyCam
-window).
+- [SteadyCam - Discord](https://discord.gg/aa2aYfuJ9g)
+- [SteadyCam - GitHub](https://github.com/carvibox/SteadyCam)
 
 ## License
 
