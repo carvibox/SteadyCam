@@ -1,6 +1,6 @@
 # SteadyCam
 
-**Frame your character once. Mount and dismount without the camera jumping.**
+**Frame your camera & character however you want, once. AND REMOVE the infamous stuttering when mounting and dismounting.**
 
 World of Warcraft lets you push the camera off to the side (the "over the shoulder" view) so your
 character isn't stuck in the middle of the screen. The catch: the game scales that offset with the size
