@@ -121,16 +121,20 @@ end
 -- Size factor ≈ K / model size (Core/MountSizes.lua): K from every measurement we have
 -- (shipped and yours, all races brought to the gnome's scale), median, rebuilt when a
 -- calibration or test adds data. (sizeK is declared above, with LearnTestRatio.)
+local sizeMin, sizeMax -- the sizes behind K: inside them the estimate is tested
 local function SizeK()
   if sizeK then
     return sizeK
   end
   local list = {}
+  sizeMin, sizeMax = nil, nil
   local function Add(key, mountID, ratio)
     local size = PC.MountSize[mountID]
     local factor, measured = PC.RaceFactor(key)
     if size and ratio and measured then
       list[#list + 1] = ratio / factor * size
+      sizeMin = math.min(sizeMin or size, size)
+      sizeMax = math.max(sizeMax or size, size)
     end
   end
   for key, mounts in pairs(PC.KnownCalibrations) do
@@ -413,6 +417,40 @@ end
 
 --- Status for the UI: "reference" | "mount" | "family" | "average", plus the pooled
 --- mount count (average) or the calibrated mount's name (family).
+--- The smallest and largest mount sizes behind the size estimate (nil, nil without data).
+function P.MeasuredSizes()
+  SizeK()
+  return sizeMin, sizeMax
+end
+
+-- How far a size estimate may reach past the sizes we have measured before it is a guess.
+local SIZE_MARGIN_LOW, SIZE_MARGIN_HIGH = 0.8, 1.25
+
+--- How much SteadyCam knows about a mount, for this race + sex:
+---   "measured"      its own, same-model, shipped or another race's measurement
+---   "estimated"     from its size, inside the sizes we have measured
+---   "blind"         no size (e.g. newer than SteadyCam's data) or a size far outside the
+---                   measured ones: the framing is a guess until it is calibrated
+---   "unmeasurable"  tried and too big to measure (calibrating again won't help)
+function P.Confidence(mountID)
+  local m = type(mountID) == "number" and PC.GetModelStore().mounts[mountID]
+  if m and m.unmeasurable then
+    return "unmeasurable"
+  end
+  local kind = P.GetSource(mountID).kind
+  if kind == "average" or kind == "reference" then
+    return "blind"
+  elseif kind == "estimated" then
+    SizeK() -- fills the measured size range
+    local size = PC.MountSize[mountID]
+    if sizeMin and (size < sizeMin * SIZE_MARGIN_LOW or size > sizeMax * SIZE_MARGIN_HIGH) then
+      return "blind"
+    end
+    return "estimated"
+  end
+  return "measured"
+end
+
 function P.Describe(mountID)
   local source = P.GetSource(mountID)
   return source.kind, source.count or source.from

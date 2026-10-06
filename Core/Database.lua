@@ -44,6 +44,7 @@ PC.Defaults = {
     showAdvanced = false,
     research = false, -- research mode: measure each race (Core/Research.lua)
     notifyUncalibrated = false, -- chat link when you ride an uncalibrated mount (opt-in: calibration is optional)
+    notifyBlind = true, -- chat link every time you ride a mount SteadyCam knows nothing about
     mountFilter = "favorites", -- calibration picker: "favorites" | "usable" | "all"
     debug = false,
   },

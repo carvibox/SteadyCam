@@ -11,9 +11,10 @@
 ## Notes-koKR: 캐릭터 위치를 한 번만 맞추세요. 탈것에 타고 내릴 때 카메라가 튀지 않습니다.
 ## Notes-zhCN: 只需调整一次角色位置。上下坐骑时镜头不再跳动。
 ## Notes-zhTW: 只需調整一次角色位置。上下坐騎時鏡頭不再跳動。
-## Version: 1.0.1
+## Version: 1.1.0
 ## Author: carvibox
 ## X-License: All Rights Reserved
+## X-Curse-Project-ID: 1727652
 ## SavedVariables: SteadyCamDB
 ## Category: Camera
 ## IconTexture: Interface\AddOns\SteadyCam\Media\Icon

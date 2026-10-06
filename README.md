@@ -41,6 +41,8 @@ camera jumps!
 - **Optional one-click calibration.** For a perfect fit on a specific mount, SteadyCam can measure it for
   your character in about a minute. You press one button per step; it does the rest.
 - **Mount families.** Calibrating one mount also covers every other mount that shares its model.
+- **Honest about what it doesn't know.** A brand-new mount, or one far bigger or smaller than any
+  SteadyCam has measured, gets a chat line every time you ride it, with a link to calibrate it.
 - **Shapeshifts and special cases.** Worgen and Dracthyr form changes, Dracthyr Soar, flight paths and
   mounts that hide your character are all handled.
 - **No commands needed.** Everything lives in one small window.

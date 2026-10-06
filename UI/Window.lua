@@ -360,6 +360,13 @@ local function AddCalibrationSection(card)
     end,
   }, 220), 12)
   card.Add(W.Toggle(card, {
+    label = L.NOTIFY_BLIND_TOGGLE,
+    desc = L.NOTIFY_BLIND_TOGGLE_DESC,
+    get = Get("notifyBlind"),
+    set = Set("notifyBlind"),
+    disabled = FramingOff,
+  }, card.inner), 10)
+  card.Add(W.Toggle(card, {
     label = L.NOTIFY_TOGGLE,
     desc = L.NOTIFY_TOGGLE_DESC,
     get = Get("notifyUncalibrated"),

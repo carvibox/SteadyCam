@@ -337,6 +337,91 @@ function W.Bold(parent, font, color, extra)
   return fs
 end
 
+--- Text for controls that can turn gold (primary buttons, selected tabs and choices). In a
+--- dark colour (on gold) it is bold and has no shadow: a dark letter over its own black
+--- shadow reads as two letters. In a light colour it is the usual text with its shadow.
+--- It switches by itself on every SetTextColor.
+function W.Ink(parent, font, color, justify)
+  local fs = W.Text(parent, font, nil, justify)
+  local twin = W.Text(parent, font, nil, justify)
+  twin:Hide()
+  if twin.SetShadowColor then
+    twin:SetShadowColor(0, 0, 0, 0)
+  end
+  local shadow = { 0, 0, 0, 1 }
+  if fs.GetShadowColor then
+    local r, g, b, a = fs:GetShadowColor()
+    if r then
+      shadow = { r, g, b, a }
+    end
+  end
+  local ink, shown = false, true
+  -- Tiny text (e.g. a "Recommended" badge) loses its shadow but isn't doubled for bold:
+  -- at that size a one-pixel twin piles the letters onto each other.
+  local MIN_BOLD = 11
+  local function Boldable()
+    local _, size = fs:GetFont()
+    return not size or size >= MIN_BOLD
+  end
+  local function Place()
+    local dx = 1
+    local PU = _G.PixelUtil
+    if PU and PU.GetNearestPixelSize and fs.GetEffectiveScale then
+      dx = PU.GetNearestPixelSize(0.6, fs:GetEffectiveScale(), 1)
+    end
+    twin:ClearAllPoints()
+    twin:SetPoint("TOPLEFT", fs, "TOPLEFT", dx, 0)
+    twin:SetPoint("BOTTOMRIGHT", fs, "BOTTOMRIGHT", dx, 0)
+  end
+  for _, method in ipairs({ "SetText", "SetFont", "SetWidth", "SetWordWrap", "SetJustifyH", "SetJustifyV", "SetAlpha" }) do
+    local original = fs[method]
+    fs[method] = function(self, ...)
+      original(self, ...)
+      twin[method](twin, ...)
+      if method == "SetText" then
+        Place() -- follows a UI scale change
+      elseif method == "SetFont" then
+        twin:SetShown(shown and ink and Boldable())
+      end
+    end
+  end
+  local show, hide = fs.Show, fs.Hide
+  function fs:SetShown(v)
+    shown = v and true or false
+    if shown then
+      show(self)
+    else
+      hide(self)
+    end
+    twin:SetShown(shown and ink and Boldable())
+  end
+  function fs:Show()
+    self:SetShown(true)
+  end
+  function fs:Hide()
+    self:SetShown(false)
+  end
+  local setColor = fs.SetTextColor
+  function fs:SetTextColor(r, g, b, a)
+    setColor(self, r, g, b, a)
+    twin:SetTextColor(r, g, b, a)
+    ink = (r + g + b) / 3 < 0.35
+    if self.SetShadowColor then
+      if ink then
+        self:SetShadowColor(0, 0, 0, 0)
+      else
+        self:SetShadowColor(shadow[1], shadow[2], shadow[3], shadow[4])
+      end
+    end
+    twin:SetShown(shown and ink and Boldable())
+  end
+  fs.inkTwin = twin
+  Place()
+  local c = color or T.text
+  fs:SetTextColor(c[1], c[2], c[3])
+  return fs
+end
+
 --- A wordmark (T.wordmark / T.wordmarkSolo), `height` units tall, cropped to its art.
 function W.Wordmark(frame, art, height, layer)
   local tex = frame:CreateTexture(nil, layer or "ARTWORK")
@@ -799,13 +884,13 @@ function W.Segmented(parent, o, width)
     local recommended = opt[1] == o.recommended
     b.bg = W.Box(b, T.trackOff, recommended and T.accent or nil, T.radiusControl, 2)
     b.hover = W.Rounded(b, "HIGHLIGHT", { 1, 1, 1, 0.08 }, T.radiusControl)
-    b.text = W.Text(b, "GameFontHighlightSmall", T.text, "CENTER")
+    b.text = W.Ink(b, "GameFontHighlightSmall", T.text, "CENTER")
     b.text:SetPoint("CENTER")
     b.text:SetText(opt[2])
     if recommended then
       b.text:ClearAllPoints()
       b.text:SetPoint("CENTER", 0, 6)
-      b.badge = W.Text(b, "GameFontHighlightSmall", T.accent, "CENTER")
+      b.badge = W.Ink(b, "GameFontHighlightSmall", T.accent, "CENTER")
       local path, _, flags = b.badge:GetFont()
       if path then
         b.badge:SetFont(path, 9, flags or "")
@@ -863,7 +948,7 @@ function W.Button(parent, o, width)
   b.bg = W.Rounded(b, "BACKGROUND", c, T.radiusControl)
   local hover = W.Rounded(b, "HIGHLIGHT", { 1, 1, 1, 0.08 }, T.radiusControl)
   local textColor = o.color and T.white or (o.primary and { 0.08, 0.08, 0.08 }) or T.text
-  b.text = W.Text(b, "GameFontNormal", textColor, "CENTER")
+  b.text = W.Ink(b, "GameFontNormal", textColor, "CENTER")
   b.text:SetPoint("CENTER")
   -- Long labels (some languages) shrink a little to stay inside the button.
   local fontPath, fontSize, fontFlags = b.text:GetFont()

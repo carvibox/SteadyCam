@@ -20,15 +20,24 @@ local function OnRide(mountID)
   end
   local use = PC.db.mountUse
   use[mountID] = (use[mountID] or 0) + 1
-  if not PC.db.settings.notifyUncalibrated or not PC.FramingActive() then
+  if not PC.FramingActive() then
     return
   end
-  if notified[mountID] or PC.Profiles.IsCalibrated(mountID) then
+  local settings = PC.db.settings
+  local name = PC.GetMountName(mountID) or "?"
+  local link = string.format(LINK, mountID, PC.L.NOTIFY_LINK)
+  -- A mount SteadyCam knows nothing about (new, or far bigger / smaller than any measured):
+  -- said every time it is ridden, until it is calibrated (on by default).
+  if settings.notifyBlind and PC.Profiles.Confidence(mountID) == "blind" then
+    PC.Print(string.format(PC.L.NOTIFY_BLIND, name, link))
+    return
+  end
+  -- Any mount without a calibration: once per session, opt-in.
+  if not settings.notifyUncalibrated or notified[mountID] or PC.Profiles.IsCalibrated(mountID) then
     return
   end
   notified[mountID] = true
-  local name = PC.GetMountName(mountID) or "?"
-  PC.Print(string.format(PC.L.NOTIFY_UNCALIBRATED, name, string.format(LINK, mountID, PC.L.NOTIFY_LINK)))
+  PC.Print(string.format(PC.L.NOTIFY_UNCALIBRATED, name, link))
 end
 
 PC.On("MOUNT_SWAP", function(mounted, mountID)

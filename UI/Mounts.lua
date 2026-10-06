@@ -98,6 +98,8 @@ local function SourceLine(mountID, kind, extra, anyOwn)
   local m = StoreEntry(mountID)
   if m and m.unmeasurable then
     return L.SRC_UNMEASURABLE, T.textDim
+  elseif PC.Profiles.Confidence(mountID) == "blind" then
+    return L.SRC_BLIND, T.accent -- new, or far outside the sizes SteadyCam has measured
   elseif kind == "builtin" or kind == "scaled" then
     return L.SRC_BUILTIN, T.textDim
   elseif kind == "estimated" then
@@ -722,7 +724,7 @@ local function Build()
     b:SetPoint("TOPLEFT", PAD + (i - 1) * (tabW + 6), -y)
     b.bg = W.Rounded(b, "BACKGROUND", T.trackOff, T.radiusControl)
     W.Rounded(b, "HIGHLIGHT", { 1, 1, 1, 0.08 }, T.radiusControl)
-    b.text = W.Text(b, "GameFontHighlightSmall", T.text, "CENTER")
+    b.text = W.Ink(b, "GameFontHighlightSmall", T.text, "CENTER")
     b.text:SetPoint("CENTER")
     b.tab = tab
     b:SetScript("OnClick", function()

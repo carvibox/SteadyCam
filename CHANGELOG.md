@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0 (2026-10-06)
+
+- Mounts SteadyCam doesn't know (newer than its data, or far bigger or smaller than any it has
+  measured) are flagged: every time you ride one, a chat line says its framing is only approximate,
+  with a link to calibrate it, until you do. On by default; a switch in the Advanced settings.
+- "View my mounts" marks those mounts as "Not known yet".
+- Dark text on gold buttons and tabs is bold, without the shadow that made it look doubled.
+
 ## 1.0.1 (2026-10-05)
 
 - New Discord invite in the window's Discord button.
